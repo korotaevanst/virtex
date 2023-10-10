@@ -1,8 +1,8 @@
 import pandas as pd
-import sklearn
-from sklearn.model_selection import train_test_split
-from sklearn import svm
-from sklearn.feature_extraction.text import CountVectorizer
+#import sklearn
+#from sklearn.model_selection import train_test_split
+#from sklearn import svm
+#from sklearn.feature_extraction.text import CountVectorizer
 import pickle
 
 data = pd.read_csv("sku_names.csv")
