@@ -21,7 +21,7 @@ if button:
 
 
 st.caption('If you need to match list of names, you should make :green[__txt/csv__] file with :green[__UTF-8__] encoding and drop! :point_down:')
-st.image("screen_1.png")
+st.image("screen_1.png", caption="One SKU - one line on txt file!")
 
 uploaded_file = st.file_uploader("Choose a file")
 
@@ -50,7 +50,7 @@ if uploaded_file:
         file_name='result.csv',
         mime='text/csv',
     )
-    st.image("screen_2.png")
+    st.image("screen_2.png", caption="Click on fisrt column and follow the instructions")
 
 
 
