@@ -7,7 +7,7 @@ loaded_model = pickle.load(open(filename, 'rb'))
 
 data = pd.read_csv("sku_names.csv")
 
-st.header("Matching distributors names :broccoli:")
+st.header("App for :green[matching distributors names]:broccoli:")
 sku = st.text_input('SKU name', " ")
 button = st.button("Predict")
 
