@@ -1,10 +1,6 @@
 import streamlit as st
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn import svm
-from sklearn.feature_extraction.text import CountVectorizer
 import pickle
-import io
 
 filename = 'finalized_model.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
