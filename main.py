@@ -33,7 +33,6 @@ model.fit(X_train, y_train)
 filename = 'finalized_model.sav'
 pickle.dump(model, open(filename, 'wb'))
 
-print(model.score(X_test, y_test))
 
 
 

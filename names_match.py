@@ -8,6 +8,8 @@ loaded_model = pickle.load(open(filename, 'rb'))
 data = pd.read_csv("sku_names.csv")
 
 st.header("App for :green[matching distributors names]:broccoli:")
+with st.chat_message('ai'):
+    st.write("Hello! Now, percentage of success - 95.1% :sparkles:")
 sku = st.text_input('SKU name', " ")
 button = st.button("Predict")
 
@@ -20,7 +22,7 @@ if button:
     st.write(output[0])
 
 
-st.caption('If you need to match list of names, you should make :green[__txt/csv__] file with :green[__UTF-8__] encoding and drop! :point_down:')
+st.caption('If you need to match list of names, you should make :green[__txt__] file with :green[__UTF-8__] encoding and drop! :point_down:')
 st.image("screen_1.png", caption="One SKU - one line on txt file!")
 
 uploaded_file = st.file_uploader("Choose a file")
