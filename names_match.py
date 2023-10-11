@@ -32,10 +32,23 @@ def convert_df(df):
     return df.to_csv().encode('cp1251')
 
 
+def preprocessing(a):
+    a = a.copy()
+    a[0] = a[0].str.lower()
+    a[0] = a[0].str.replace('"', ' ')
+    a[0] = a[0].str.replace('х', ' ')
+    a[0] = a[0].str.replace('*', ' ')
+    a[0] = a[0].str.replace('/', ' ')
+    a[0] = a[0].str.replace('шт', ' шт')
+    a[0] = a[0].str.replace('гр', ' гр')
+    a[0] = a[0].str.replace('г', ' г')
+    return a
+
+
 if uploaded_file:
-    names_for_predict = pd.read_csv(uploaded_file, on_bad_lines='skip', header=None)
+    names_for_predict = pd.read_csv(uploaded_file, header=None, sep='delimiter')
     st.success("Download success!")
-    vectorize_names = vectorizer_.transform(names_for_predict[0])
+    vectorize_names = vectorizer_.transform(preprocessing(names_for_predict)[0])
     output_names = loaded_model.predict(vectorize_names)
     st.success("Match success!")
 
