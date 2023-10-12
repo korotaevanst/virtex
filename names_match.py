@@ -11,15 +11,21 @@ st.header("App for :green[matching distributors names]:broccoli:")
 with st.chat_message('ai'):
     st.write("Hello! Now, percentage of success - 95.1% :sparkles:")
 sku = st.text_input('SKU name', " ")
-button = st.button("Predict")
 
 vectorizer_name = 'vectorizer.sav'
 vectorizer_ = pickle.load(open(vectorizer_name, 'rb'))
 
-if button:
+if sku:
+    sku = sku.lower()
+    sku = sku.replace('"', ' ')
+    sku = sku.replace('*', ' ')
+    sku = sku.replace('/', ' ')
+    sku = sku.replace('шт', ' шт')
+    sku = sku.replace('гр', ' гр')
     vectorize_sku = vectorizer_.transform([sku])
     output = loaded_model.predict(vectorize_sku)
     st.write(output[0])
+
 
 
 st.caption('If you need to match list of names, you should make :green[__txt__] file with :green[__UTF-8__] encoding and drop! :point_down:')
@@ -38,12 +44,11 @@ def preprocessing(a):
     a = a.copy()
     a[0] = a[0].str.lower()
     a[0] = a[0].str.replace('"', ' ')
-    a[0] = a[0].str.replace('х', ' ')
     a[0] = a[0].str.replace('*', ' ')
     a[0] = a[0].str.replace('/', ' ')
     a[0] = a[0].str.replace('шт', ' шт')
     a[0] = a[0].str.replace('гр', ' гр')
-    a[0] = a[0].str.replace('г', ' г')
+    a[0] = a[0].str.replace('0г', '0 г')
     return a
 
 
@@ -54,10 +59,8 @@ if uploaded_file:
     output_names = loaded_model.predict(vectorize_names)
     st.success("Match success!")
 
-    st.caption("What's next? __Click for download!__")
-    st.caption("Open file and follow the instructions:point_down:")
-
     result = pd.DataFrame(list(zip(names_for_predict[0], output_names)), columns=['distr_name', 'original_name'])
+    st.dataframe(result)
     csv = convert_df(result)
     st.download_button(
         label="Click for download!:point_left:",
@@ -65,7 +68,6 @@ if uploaded_file:
         file_name='result.csv',
         mime='text/csv',
     )
-    st.image("screen_2.png", caption="Click on fisrt column and follow the instructions")
 
 
 
