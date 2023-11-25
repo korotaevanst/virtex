@@ -1,18 +1,13 @@
 import pickle
 import pandas as pd
-from sklearn import svm
+from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 data = pd.read_csv("sku_names.csv")
-
-data["distr_name"] = data["distr_name"].str.lower()
-data["distr_name"] = data["distr_name"].str.replace('"', ' ')
-data["distr_name"] = data["distr_name"].str.replace('*', ' ')
-data["distr_name"] = data["distr_name"].str.replace('/', ' ')
-data["distr_name"] = data["distr_name"].str.replace('шт', ' шт')
-data["distr_name"] = data["distr_name"].str.replace('гр', ' гр')
-data["distr_name"] = data["distr_name"].str.replace('0г', '0 г')
 data.dropna(inplace=True)
 
 X = data["distr_name"]
@@ -26,12 +21,12 @@ pickle.dump(vectorizer, open(vectorizer_name, 'wb'))
 
 X_train, X_test, y_train, y_test = train_test_split(train_x_vectors, y, test_size=0.2, random_state=42)
 
-model = svm.SVC(kernel="linear", C=1.5, gamma=1)
-model.fit(X_train, y_train)
+pipe = Pipeline([('scaler', StandardScaler(with_mean=False)), ('svm', LinearSVC())])
+pipe.fit(X_train, y_train)
 
 filename = 'finalized_model.sav'
-pickle.dump(model, open(filename, 'wb'))
-print(model.score(X_test, y_test))
+pickle.dump(pipe, open(filename, 'wb'))
+
 
 
 

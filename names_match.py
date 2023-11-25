@@ -16,12 +16,6 @@ vectorizer_name = 'vectorizer.sav'
 vectorizer_ = pickle.load(open(vectorizer_name, 'rb'))
 
 if sku:
-    sku = sku.lower()
-    sku = sku.replace('"', ' ')
-    sku = sku.replace('*', ' ')
-    sku = sku.replace('/', ' ')
-    sku = sku.replace('шт', ' шт')
-    sku = sku.replace('гр', ' гр')
     vectorize_sku = vectorizer_.transform([sku])
     output = loaded_model.predict(vectorize_sku)
     st.write(output[0])
